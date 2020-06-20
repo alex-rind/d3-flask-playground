@@ -1,0 +1,28 @@
+{
+  "name": "d3-flask-playground",
+  "version": "1.0.0",
+  "description": "simple experiment visualizing python generated data in D3",
+  "repository": "https://github.com/alex-rind/d3-flask-playground.git",
+  "author": "Alexander Rind (https://github.com/alex-rind/)",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run build:dist",
+    "build:dev": "webpack --config webpack.dev.js",
+    "build:dist": "webpack --config webpack.prod.js",
+    "start": "webpack-dev-server --config webpack.dev.js"
+  },
+  "devDependencies": {
+    "@types/d3": "^5.7.2",
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.9.5",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "d3": "^5.16.0"
+  }
+}
