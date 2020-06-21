@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
-
+from waitress import serve
 
 # configuration
 DEBUG = True
@@ -20,5 +20,5 @@ def ping_pong():
 
 
 if __name__ == '__main__':
-    app.run()
+    serve(app, host='0.0.0.0', port='5000')
 
