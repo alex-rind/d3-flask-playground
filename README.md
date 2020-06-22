@@ -12,6 +12,7 @@ python3.8 -m venv venv
 source venv/bin/activate
 pip install Flask Flask-Cors
 pip install waitress
+pip install numpy
 ```
 
 Code from <https://testdriven.io/blog/developing-a-single-page-app-with-flask-and-vuejs/>
@@ -21,7 +22,7 @@ Use [waitress](https://docs.pylonsproject.org/projects/waitress/en/stable/usage.
 Start:
 * development server: `FLASK_ENV=development FLASK_APP=app:app flask run`
 * production server: `waitress-serve --port=5000 app:app`
-* browse to <http://127.0.0.1:5000/ping>
+* browse to <http://127.0.0.1:5000/data/12>
 
 ## ToDos
 

@@ -1,5 +1,8 @@
+import datetime
+
 from flask import Flask, jsonify
 from flask_cors import CORS
+import numpy as np # np is general convention
 
 # configuration
 
@@ -17,3 +20,13 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 @app.route('/ping', methods=['GET'])
 def ping_pong():
     return jsonify('pong!')
+
+@app.route('/data/<int:length>')
+def getRandomData(length):
+    data = np.random.uniform(0, 1, length).tolist()
+    # data type dict is automatically converted to JSON
+    return {
+        "length": length,
+        "lastmod": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "data": data
+    }
