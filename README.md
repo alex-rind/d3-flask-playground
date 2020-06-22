@@ -18,10 +18,14 @@ Code from <https://testdriven.io/blog/developing-a-single-page-app-with-flask-an
 
 Use [waitress](https://docs.pylonsproject.org/projects/waitress/en/stable/usage.html) as a [production WSGI server](https://flask.palletsprojects.com/en/1.1.x/tutorial/deploy/).
 
-Start `python app.py` and browse to <http://127.0.0.1:5000/ping>
+Start:
+* development server: `FLASK_ENV=development FLASK_APP=app:app flask run`
+* production server: `waitress-serve --port=5000 app:app`
+* browse to <http://127.0.0.1:5000/ping>
 
 ## ToDos
 
 * configure CORS
-* check a developer key
+* set a secret key (used to sign cookies, if session object is used)
+* try <https://geekflare.com/python-asynchronous-web-frameworks/>
 

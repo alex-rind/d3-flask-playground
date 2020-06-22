@@ -1,11 +1,10 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
-from waitress import serve
 
 # configuration
-DEBUG = True
 
 # instantiate the app
+# app:app is a default name that would be autodiscovered by flask run
 app = Flask(__name__)
 app.config.from_object(__name__)
 
@@ -14,11 +13,7 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 
 
 # sanity check route
+# by default, a route only answers to GET requests
 @app.route('/ping', methods=['GET'])
 def ping_pong():
     return jsonify('pong!')
-
-
-if __name__ == '__main__':
-    serve(app, host='0.0.0.0', port='5000')
-
