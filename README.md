@@ -3,7 +3,9 @@ simple experiment visualizing python generated data in D3
 
 ## Frontend Setup (TypeScript, D3)
 
-cp. <https://github.com/alex-rind/ts-playground/tree/master/webpack4-tsonly>
+- start from <https://github.com/alex-rind/ts-playground/tree/master/webpack4-tsonly>
+- change to a D3 line plot with animated transitions on loading fresh data
+- retrieve data from a hard coded REST API URL
 
 ## Backend Setup (Python, Flask)
 
@@ -29,4 +31,3 @@ Start:
 * configure CORS
 * set a secret key (used to sign cookies, if session object is used)
 * try <https://geekflare.com/python-asynchronous-web-frameworks/>
-

@@ -1,63 +1,86 @@
 import * as d3 from "d3";
 
-const width = 400;
-const height = 400;
-const MARKS = 16;
+const BACKEND_URL = "http://localhost:5000/";
 
-export function renderChart(domId: string) {
-    const svg = d3.select(domId)
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height);
+const LINE_PLOT_WIDTH = 300;
+const LINE_PLOT_HEIGHT = 300;
+const margin = { top: 25, right: 10, bottom: 25, left: 50 };
+const innerWidth = LINE_PLOT_WIDTH - margin.left - margin.right;
+const innerHeight = LINE_PLOT_HEIGHT - margin.top - margin.bottom;
 
-    // some fruits categories and a color scale
-    const fruits = ['Apple', 'Banana', 'Cherry', 'Orange'];
-    const color = d3.scaleOrdinal(d3.schemeCategory10);
-    appendLegend(svg, fruits, color);
+export function initChart(domId: string) {
+	const svg = d3
+		.select(domId)
+		.append("svg")
+		.attr("width", LINE_PLOT_WIDTH)
+		.attr("height", LINE_PLOT_HEIGHT);
 
-    // random generate fruit items
-    const data = [];
+	const gPlot = svg
+		.append("g")
+		.classed("stdline", true)
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    for (let i = 0; i < MARKS; i++) {
-        data.push({type: fruits[Math.floor(Math.random()*fruits.length)], 
-            count: Math.ceil(Math.random()*10)});
-    }
+	// y-axis caption
+	gPlot
+		.append("text")
+		.attr("class", "label")
+		.attr("transform", "rotate(-90)")
+		.attr("x", -innerHeight / 2)
+		.attr("y", -33)
+		.style("text-anchor", "middle")
+		.text("example units");
 
-    // pack layout as in <https://observablehq.com/@d3/bubble-chart>
-    const root = d3.pack()
-        .size([width - 2, height - 2])
-        .padding(3)
-        (d3.hierarchy({children: data}).sum((d:any) => d.count));
-
-    // simply draw circles
-    var node = svg.selectAll("circle")
-        .data(root.leaves())
-        .join('circle')
-            .attr("cx", d => d.x)
-            .attr("cy", d => d.y)
-            .attr("r", d => d.r)
-            .attr("fill", (d:any) => color(d.data.type))
-            .append("title")
-                .text((d:any) => d.data.type);
+	// draw the axes in separate svg groups
+	gPlot
+		.append("g")
+		.attr("class", "x axis")
+		.attr("transform", "translate(0," + innerHeight + ")");
+	gPlot.append("g").attr("class", "y axis");
 }
 
-function appendLegend(svg: d3.Selection<SVGSVGElement, any, HTMLElement, any>, 
-    allTypes: string[], color: d3.ScaleOrdinal<string, string>) {
+export function renderChart(domId: string) {
+	const gPlot = d3.select(domId).select("g.stdline");
+	const t = gPlot.transition().duration(750);
 
-    const legendEntries = svg.append('g')
-        .attr("id", "legend")
-        .selectAll('g')
-        .data(allTypes)
-        .enter().append('g')
-        .attr("transform", (d, i) => {return "translate(" + 15 + ", " + (i*16 + 15) + ")"});
+	d3.json(BACKEND_URL + "data/12").then(
+		(data: any) => {
+			console.log(data);
 
-    legendEntries.append('text')
-        .text((d) => d);
+			d3.select("#modified span").text(data.lastmod);
 
-    legendEntries.append('rect')
-        .attr('x', '-10')
-        .attr('y', '-7')
-        .attr('width', '7')
-        .attr('height', '7')
-        .style('fill', (d) => color(d));
+			const series = data.data as number[];
+
+			// prepare a scales for value to position transformation
+			const xScale = d3
+				.scaleLinear()
+				.domain([0, series.length - 1]) // time steps
+				.range([0, innerWidth]);
+
+			const yScale = d3
+				.scaleLinear()
+				.domain(d3.extent(series) as number[])
+				.range([innerHeight, 0]);
+
+			gPlot.selectAll(".x.axis").call(d3.axisBottom(xScale) as any);
+
+			gPlot
+				.selectAll(".y.axis")
+				.transition(t)
+				.call(d3.axisLeft(yScale) as any);
+
+			// configure a (reusable) line helper function
+			const lineGenerator = d3
+				.line()
+				.x((d, i) => xScale(i))
+				.y((d) => yScale(+d));
+
+			gPlot
+				.selectAll("path.series")
+				.data([series])
+				.join((enter) => enter.append("path").classed("series", true))
+				.transition(t)
+				.attr("d", lineGenerator as any);
+		},
+		(error) => console.warn("Error loading data from Python: " + error)
+	);
 }
