@@ -1,12 +1,6 @@
 # d3-flask-playground
 simple experiment visualizing python generated data in D3
 
-## Frontend Setup (TypeScript, D3)
-
-- start from <https://github.com/alex-rind/ts-playground/tree/master/webpack4-tsonly>
-- change to a D3 line plot with animated transitions on loading fresh data
-- retrieve data from a hard coded REST API URL
-
 ## Backend Setup (Python, Flask)
 
 ```
@@ -26,8 +20,22 @@ Start:
 * production server: `waitress-serve --port=5000 app:app`
 * browse to <http://127.0.0.1:5000/data/12>
 
-## ToDos
+## Frontend Setup (TypeScript, D3)
+
+- start from <https://github.com/alex-rind/ts-playground/tree/master/webpack4-tsonly>
+- change to a D3 line plot with animated transitions on loading fresh data
+- retrieve data from a hard coded REST API URL
+
+Steps to run:
+* Setup dependencies `yarn install`
+* (optionally) change `BACKEND_URL` in `src/chart.ts`
+* Start development server `npm start` and browse to <http://localhost:8080/>
+* Build for production server `npm run build` and copy `dist` folder
+
+## Further ToDos
 
 * configure CORS
 * set a secret key (used to sign cookies, if session object is used)
+* if backend accepts inputs, MUST validate inputs (e.g., <https://www.youtube.com/watch?v=e5_rgkvZsyk>)
+* [flask-restful]<https://flask-restful.readthedocs.io/en/latest/quickstart.html#a-minimal-api> provides object-to-API mapping for a typically REST interface
 * try <https://geekflare.com/python-asynchronous-web-frameworks/>
