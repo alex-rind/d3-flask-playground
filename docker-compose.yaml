@@ -1,0 +1,20 @@
+version: '3'
+services:
+  backend:
+    build: ./backend
+    container_name: d3-flask-playground-backend
+    ports: 
+      - "5000:5000"
+    environment: 
+      - FLASK_ENV=development
+      - FLASK_APP=app:app
+    command: "flask run --host 0.0.0.0"      
+  frontend:
+    build: .
+    container_name: d3-flask-playground-frontend  
+    ports:
+      - "8080:8080"
+    links:
+      - backend
+    command: webpack-dev-server --config webpack.dev.js --host 0.0.0.0
+    

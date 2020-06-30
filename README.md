@@ -1,6 +1,16 @@
 # d3-flask-playground
 simple experiment visualizing python generated data in D3
 
+## Setup with Docker Compose
+
+If you have [Docker Compose](https://docs.docker.com/compose/) installed on your machine, you can quickly setup the backend and frontend in development mode, as described below, with one command:
+
+```bash
+$ docker-compose up
+```
+
+Then, navigate your browser to localhost:8080.
+
 ## Backend Setup (Python, Flask)
 
 *On Windows, activate virtual environment with `source venv/Scripts/activate`.*
