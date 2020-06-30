@@ -3,6 +3,8 @@ simple experiment visualizing python generated data in D3
 
 ## Backend Setup (Python, Flask)
 
+*On Windows, activate virtual environment with `source venv/Scripts/activate`.*
+
 ```
 python3.8 -m venv venv
 source venv/bin/activate
