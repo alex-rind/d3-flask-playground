@@ -16,11 +16,5 @@ COPY yarn.lock /var/www/
 ADD src /var/www/src
 ADD dist /var/www/dist
 
-# Install required Node modules
-RUN npm install
-
-# Install webpack CLT stuff
-RUN npm install -g webpack webpack-dev-server
-
 # Install required Yarn modules
 RUN yarn install

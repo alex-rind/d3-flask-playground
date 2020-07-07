@@ -16,5 +16,4 @@ services:
       - "8080:8080"
     links:
       - backend
-    command: webpack-dev-server --config webpack.dev.js --host 0.0.0.0
-    
+    command: npx webpack-dev-server --config webpack.dev.js --host 0.0.0.0
