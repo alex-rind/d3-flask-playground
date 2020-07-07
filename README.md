@@ -40,7 +40,7 @@ Start:
 
 Steps to run:
 * Setup dependencies `yarn install`
-* (optionally) change `BACKEND_URL` in `src/chart.ts`
+* (optionally) change `BACKEND_URL` in `src/index.ts` (default: same host as frontend web server)
 * Start development server `npm start` and browse to <http://localhost:8080/>
 * Build for production server `npm run build` and copy `dist` folder
 

@@ -1,7 +1,5 @@
 import * as d3 from "d3";
 
-const BACKEND_URL = "http://localhost:5000/";
-
 const LINE_PLOT_WIDTH = 300;
 const LINE_PLOT_HEIGHT = 300;
 const margin = { top: 25, right: 10, bottom: 25, left: 50 };
@@ -38,11 +36,11 @@ export function initChart(domId: string) {
 	gPlot.append("g").attr("class", "y axis");
 }
 
-export function renderChart(domId: string) {
+export function renderChart(domId: string, dataUrl: string) {
 	const gPlot = d3.select(domId).select("g.stdline");
 	const t = gPlot.transition().duration(750);
 
-	d3.json(BACKEND_URL + "data/12").then(
+	d3.json(dataUrl).then(
 		(data: any) => {
 			console.log(data);
 
