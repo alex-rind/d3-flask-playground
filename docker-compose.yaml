@@ -12,12 +12,12 @@ services:
       - FLASK_APP=app:app
     command: "flask run --host 0.0.0.0"
   frontend:
-    build: .
+    build: ./frontend
     container_name: d3-flask-playground-frontend
     ports:
       - "8080:8080"
     volumes:
-      - .:/var/www
+      - ./frontend:/var/www
     links:
       - backend
     command: npx webpack-dev-server --config webpack.dev.js --host 0.0.0.0
